@@ -1,0 +1,13 @@
+fabric:
+  group_name:
+  device:
+  package_name:
+  mail_address:
+  password:
+  version_name:
+  version_code:
+slack:
+  incoming_url:
+  channel:
+  user_name:
+  emoji:
