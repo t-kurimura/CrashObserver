@@ -2,15 +2,8 @@ require 'nokogiri'
 require 'capybara'
 require 'rails_helper'
 require 'slack-notifier'
-require 'clockwork'
 require 'yaml'
 require 'capybara/poltergeist'
-
-include Clockwork
-
-every(1.hour, 'job', at: ['10:00', '19:00']) do
-  print_crash_info
-end
 
 $yaml = YAML.load_file("./config.yml")
 
@@ -19,7 +12,7 @@ def print_crash_info
   session = create_logind_session($yaml["fabric"]["mail_address"], $yaml["fabric"]["password"])
   session = go_to_android(session)
 
-  title = "*** Android Fabric Info (AllVersions) *** \n"
+  title = "*Android Fabric Info (All versions)*\n"
   free_text =  "Crash free user rate : #{parse_crash_free_user_rate(session)}\n"
   session_text = "Crash free session rate : #{parse_crash_free_session_rate(session)}"
   merged_text = title + free_text + session_text
@@ -33,10 +26,12 @@ def print_latest_crash_info
   session = create_logind_session($yaml["fabric"]["mail_address"], $yaml["fabric"]["password"])
   session = go_to_android(session, $yaml["fabric"]["version_name"], $yaml["fabric"]["version_code"])
 
-  puts "*Android Fabric Info (LatestVersion)*\n "
-  puts "Crash free user rate : #{parse_crash_free_user_rate(session)}"
-  puts "Crash free session rate : #{parse_crash_free_session_rate(session)}"
-
+  title = "*Android Fabric Info (#{$yaml["fabric"]["version_name"]})*\n "
+  free_text = "Crash free user rate : #{parse_crash_free_user_rate(session)}\n"
+  session_text = "Crash free session rate : #{parse_crash_free_session_rate(session)}"
+  
+  merged_text = title + free_text + session_text
+  notify_to_slack(merged_text)
 end  
 
 def create_logind_session(email, password)
@@ -99,5 +94,5 @@ def notify_to_slack(text)
   slack.post text: text, icon_emoji: $yaml["slack"]["emoji"]
 end
 
-
+print_latest_crash_info
 print_crash_info
