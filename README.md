@@ -1,6 +1,6 @@
 # Oberview
 
-This application observe specified app crash rate and notify to slack.
+This application observe specified app crash rate from *fabric.io* and notify to *Slack*.
 
 # Getting started
 
