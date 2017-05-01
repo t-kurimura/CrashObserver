@@ -1,14 +1,14 @@
-# Oberview
+# Overview
 
 This application observe specified app crash rate from *fabric.io* and notify to *Slack*.
 
 # Getting started
 
-1. Install required ruby packages
+1. Install required Ruby gem packages
 
 `bundle install --path vendor/bundle`
 
-2. Generate config yml file to production
+2. Generate config yml file for production
 
 `cp sample.config.yml config.yml`
 
@@ -32,8 +32,6 @@ slack:
 
 ```
 
-
-
 4. Install Node package manage tool
 
 `brew install npm`
@@ -44,20 +42,25 @@ slack:
 
 # Usage
 
-## Confirm execution.
+## Confirm execution
 
 `bundle exec ruby src/access.rb`
 
 ## Cron execution
 
-### Foreground execution.
+### Foreground
 
 `bundle exec clockwork src/clock.rb`
 
-#### Background execution.
+### Background
 
 `bundle exec nohup clockwork src/clock.rb &`
 
+
+### For detail
+
+Clockwork created by Adam Wiggins
+https://github.com/adamwiggins/clockwork
 
 
 
