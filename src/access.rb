@@ -37,7 +37,7 @@ end
 def create_logind_session(email, password)
 
   Capybara.register_driver :poltergeist do |app|
-    Capybara::Poltergeist::Driver.new(app, {:js_errors => false, :timeout => 1000 })
+    Capybara::Poltergeist::Driver.new(app, {:js_errors => false, :timeout => 10000 })
   end
 
   Capybara.default_selector = :css
